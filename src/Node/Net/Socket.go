@@ -57,8 +57,8 @@ func ConnectTcpImpl(arg0 interface{}, arg1 interface{}) interface{} {
 }
 
 func CreateConnectionImpl(arg0 interface{}) interface{} {
-	s := NewImpl(nil)
-	return ConnectTcpImpl(s, arg0)
+	s := Node_Net_Socket_NewImpl(nil)
+	return Node_Net_Socket_ConnectTcpImpl(s, arg0)
 }
 
 func AddressImpl(arg0 interface{}) interface{} { return Node_EventEmitter_NewImpl(nil) }
