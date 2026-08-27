@@ -7,12 +7,12 @@ import (
 )
 
 func NewImpl(arg0 interface{}) interface{} {
-	e := Node_EventEmitter_NewImpl(nil).(*Node_EventEmitter_EventEmitter)
+	e := Node_EventEmitter_NewImpl(nil).(*EventEmitter)
 	return e
 }
 
 func ConnectTcpImpl(arg0 interface{}, arg1 interface{}) interface{} {
-	s := gopurs_runtime.Unbox[*Node_EventEmitter_EventEmitter](arg0)
+	s := gopurs_runtime.Unbox[*EventEmitter](arg0)
 	
 	options := gopurs_runtime.RecordToMap(arg1.(gopurs_runtime.Value))
 	port := gopurs_runtime.Unbox[int64](options["port"])
@@ -67,7 +67,7 @@ func BytesWrittenImpl(arg0 interface{}) interface{} { return Node_EventEmitter_N
 func ConnectIpcImpl(arg0 interface{}, arg1 interface{}) interface{} { return arg0 }
 func ConnectingImpl(arg0 interface{}) interface{} { return false }
 func DestroySoonImpl(arg0 interface{}) interface{} { 
-    if s, ok := gopurs_runtime.Unbox[*Node_EventEmitter_EventEmitter](arg0).Any.(net.Conn); ok {
+    if s, ok := gopurs_runtime.Unbox[*EventEmitter](arg0).Any.(net.Conn); ok {
         s.Close()
     }
     return nil 
