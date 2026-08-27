@@ -2,18 +2,17 @@ package main
 
 import (
 	"fmt"
-	"gopurs/output/Node.EventEmitter"
 	"gopurs/output/gopurs_runtime"
 	"net"
 )
 
 func NewImpl(arg0 interface{}) interface{} {
-	e := Node_EventEmitter.NewImpl(nil).(*Node_EventEmitter.EventEmitter)
+	e := Node_EventEmitter_NewImpl(nil).(*Node_EventEmitter_EventEmitter)
 	return e
 }
 
 func ConnectTcpImpl(arg0 interface{}, arg1 interface{}) interface{} {
-	s := gopurs_runtime.Unbox[*Node_EventEmitter.EventEmitter](arg0)
+	s := gopurs_runtime.Unbox[*Node_EventEmitter_EventEmitter](arg0)
 	
 	options := gopurs_runtime.RecordToMap(arg1.(gopurs_runtime.Value))
 	port := gopurs_runtime.Unbox[int64](options["port"])
@@ -30,14 +29,14 @@ func ConnectTcpImpl(arg0 interface{}, arg1 interface{}) interface{} {
 	go func() {
 		conn, err := net.Dial("tcp", address)
 		if err != nil {
-			Node_EventEmitter.GopursUnsafeEmitFn2(gopurs_runtime.Box(s), "error", gopurs_runtime.Box(err.Error()), nil)
+			Node_EventEmitter_GopursUnsafeEmitFn2(gopurs_runtime.Box(s), "error", gopurs_runtime.Box(err.Error()), nil)
 			return
 		}
 		
 		s.Any = conn // Set io.Writer / io.Closer for Node.Stream
 		
-		Node_EventEmitter.GopursUnsafeEmitFn1(gopurs_runtime.Box(s), "connect", nil)
-		Node_EventEmitter.GopursUnsafeEmitFn1(gopurs_runtime.Box(s), "ready", nil)
+		Node_EventEmitter_GopursUnsafeEmitFn1(gopurs_runtime.Box(s), "connect", nil)
+		Node_EventEmitter_GopursUnsafeEmitFn1(gopurs_runtime.Box(s), "ready", nil)
 		
 		buf := make([]byte, 8192)
 		for {
@@ -45,11 +44,11 @@ func ConnectTcpImpl(arg0 interface{}, arg1 interface{}) interface{} {
 			if n > 0 {
 				data := make([]byte, n)
 				copy(data, buf[:n])
-				Node_EventEmitter.GopursUnsafeEmitFn2(gopurs_runtime.Box(s), "data", gopurs_runtime.Box(data), nil)
+				Node_EventEmitter_GopursUnsafeEmitFn2(gopurs_runtime.Box(s), "data", gopurs_runtime.Box(data), nil)
 			}
 			if err != nil {
-				Node_EventEmitter.GopursUnsafeEmitFn1(gopurs_runtime.Box(s), "end", nil)
-				Node_EventEmitter.GopursUnsafeEmitFn2(gopurs_runtime.Box(s), "close", gopurs_runtime.Box(false), nil)
+				Node_EventEmitter_GopursUnsafeEmitFn1(gopurs_runtime.Box(s), "end", nil)
+				Node_EventEmitter_GopursUnsafeEmitFn2(gopurs_runtime.Box(s), "close", gopurs_runtime.Box(false), nil)
 				break
 			}
 		}
@@ -62,13 +61,13 @@ func CreateConnectionImpl(arg0 interface{}) interface{} {
 	return ConnectTcpImpl(s, arg0)
 }
 
-func AddressImpl(arg0 interface{}) interface{} { return Node_EventEmitter.NewImpl(nil) }
-func BytesReadImpl(arg0 interface{}) interface{} { return Node_EventEmitter.NewImpl(nil) }
-func BytesWrittenImpl(arg0 interface{}) interface{} { return Node_EventEmitter.NewImpl(nil) }
+func AddressImpl(arg0 interface{}) interface{} { return Node_EventEmitter_NewImpl(nil) }
+func BytesReadImpl(arg0 interface{}) interface{} { return Node_EventEmitter_NewImpl(nil) }
+func BytesWrittenImpl(arg0 interface{}) interface{} { return Node_EventEmitter_NewImpl(nil) }
 func ConnectIpcImpl(arg0 interface{}, arg1 interface{}) interface{} { return arg0 }
 func ConnectingImpl(arg0 interface{}) interface{} { return false }
 func DestroySoonImpl(arg0 interface{}) interface{} { 
-    if s, ok := gopurs_runtime.Unbox[*Node_EventEmitter.EventEmitter](arg0).Any.(net.Conn); ok {
+    if s, ok := gopurs_runtime.Unbox[*Node_EventEmitter_EventEmitter](arg0).Any.(net.Conn); ok {
         s.Close()
     }
     return nil 

@@ -2,21 +2,20 @@ package main
 
 import (
 	"fmt"
-	"gopurs/output/Node.EventEmitter"
 	"gopurs/output/gopurs_runtime"
 	"net"
 )
 
 func NewServerImpl() interface{} { 
-    return Node_EventEmitter.NewImpl(nil) 
+    return Node_EventEmitter_NewImpl(nil) 
 }
 
 func NewServerOptionsImpl(arg0 interface{}) interface{} { 
-    return Node_EventEmitter.NewImpl(nil) 
+    return Node_EventEmitter_NewImpl(nil) 
 }
 
 func ListenImpl(arg0 interface{}, arg1 interface{}) interface{} {
-	s := gopurs_runtime.Unbox[*Node_EventEmitter.EventEmitter](arg0)
+	s := gopurs_runtime.Unbox[*Node_EventEmitter_EventEmitter](arg0)
 	
 	options := gopurs_runtime.RecordToMap(arg1.(gopurs_runtime.Value))
 	port := gopurs_runtime.Unbox[int64](options["port"])
@@ -34,30 +33,30 @@ func ListenImpl(arg0 interface{}, arg1 interface{}) interface{} {
 	go func() {
 		listener, err := net.Listen("tcp", address)
 		if err != nil {
-			Node_EventEmitter.GopursUnsafeEmitFn2(gopurs_runtime.Box(s), "error", gopurs_runtime.Box(err.Error()), nil)
+			Node_EventEmitter_GopursUnsafeEmitFn2(gopurs_runtime.Box(s), "error", gopurs_runtime.Box(err.Error()), nil)
 			return
 		}
 		
 		s.Any = listener
 		
-		Node_EventEmitter.GopursUnsafeEmitFn1(gopurs_runtime.Box(s), "listening", nil)
+		Node_EventEmitter_GopursUnsafeEmitFn1(gopurs_runtime.Box(s), "listening", nil)
 		
 		for {
 			conn, err := listener.Accept()
 			if err != nil {
-				Node_EventEmitter.GopursUnsafeEmitFn1(gopurs_runtime.Box(s), "close", nil)
+				Node_EventEmitter_GopursUnsafeEmitFn1(gopurs_runtime.Box(s), "close", nil)
 				break
 			}
 			
 			// We need to create a new Socket object and emit "connection"
-			socketObj := Node_EventEmitter.NewImpl(nil).(*Node_EventEmitter.EventEmitter)
+			socketObj := Node_EventEmitter_NewImpl(nil).(*Node_EventEmitter_EventEmitter)
 			socketObj.Any = conn
 			
 			// Emit connection event with the socket
-			Node_EventEmitter.GopursUnsafeEmitFn2(gopurs_runtime.Box(s), "connection", gopurs_runtime.Box(socketObj), nil)
+			Node_EventEmitter_GopursUnsafeEmitFn2(gopurs_runtime.Box(s), "connection", gopurs_runtime.Box(socketObj), nil)
 			
 			// start read loop for the accepted socket
-			go func(c net.Conn, sock *Node_EventEmitter.EventEmitter) {
+			go func(c net.Conn, sock *Node_EventEmitter_EventEmitter) {
 				if sock.Any == nil {
 					return // HTTP Server stole the socket, don't read from it!
 				}
@@ -67,11 +66,11 @@ func ListenImpl(arg0 interface{}, arg1 interface{}) interface{} {
 					if n > 0 {
 						data := make([]byte, n)
 						copy(data, buf[:n])
-						Node_EventEmitter.GopursUnsafeEmitFn2(gopurs_runtime.Box(sock), "data", gopurs_runtime.Box(data), nil)
+						Node_EventEmitter_GopursUnsafeEmitFn2(gopurs_runtime.Box(sock), "data", gopurs_runtime.Box(data), nil)
 					}
 					if err != nil {
-						Node_EventEmitter.GopursUnsafeEmitFn1(gopurs_runtime.Box(sock), "end", nil)
-						Node_EventEmitter.GopursUnsafeEmitFn2(gopurs_runtime.Box(sock), "close", gopurs_runtime.Box(false), nil)
+						Node_EventEmitter_GopursUnsafeEmitFn1(gopurs_runtime.Box(sock), "end", nil)
+						Node_EventEmitter_GopursUnsafeEmitFn2(gopurs_runtime.Box(sock), "close", gopurs_runtime.Box(false), nil)
 						break
 					}
 				}
@@ -82,7 +81,7 @@ func ListenImpl(arg0 interface{}, arg1 interface{}) interface{} {
 }
 
 func CloseImpl(arg0 interface{}) interface{} {
-    s := gopurs_runtime.Unbox[*Node_EventEmitter.EventEmitter](arg0)
+    s := gopurs_runtime.Unbox[*Node_EventEmitter_EventEmitter](arg0)
     if listener, ok := s.Any.(net.Listener); ok {
         listener.Close()
     }
@@ -90,7 +89,7 @@ func CloseImpl(arg0 interface{}) interface{} {
 }
 
 func AddressTcpImpl(arg0 interface{}) interface{} {
-    s := gopurs_runtime.Unbox[*Node_EventEmitter.EventEmitter](arg0)
+    s := gopurs_runtime.Unbox[*Node_EventEmitter_EventEmitter](arg0)
     if listener, ok := s.Any.(net.Listener); ok {
         if addr, ok2 := listener.Addr().(*net.TCPAddr); ok2 {
             rec := make(map[string]gopurs_runtime.Value)
