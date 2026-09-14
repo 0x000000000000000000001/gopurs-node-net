@@ -675,20 +675,11 @@
       "aff": {
         "path": "../gopurs-aff"
       },
-      "argonaut-core": {
-        "path": "../gopurs-argonaut-core"
-      },
       "arrays": {
         "path": "../gopurs-arrays"
       },
       "assert": {
         "path": "../gopurs-assert"
-      },
-      "avar": {
-        "path": "../gopurs-avar"
-      },
-      "catenable-lists": {
-        "path": "../gopurs-catenable-lists"
       },
       "console": {
         "path": "../gopurs-console"
@@ -720,15 +711,6 @@
       "integers": {
         "path": "../gopurs-integers"
       },
-      "js-promise": {
-        "path": "../gopurs-js-promise"
-      },
-      "js-promise-aff": {
-        "path": "../gopurs-js-promise-aff"
-      },
-      "js-uri": {
-        "path": "../gopurs-js-uri"
-      },
       "lazy": {
         "path": "../gopurs-lazy"
       },
@@ -738,20 +720,11 @@
       "node-fs": {
         "path": "../gopurs-node-fs"
       },
-      "node-http": {
-        "path": "../gopurs-node-http"
-      },
       "node-path": {
         "path": "../gopurs-node-path"
       },
-      "node-process": {
-        "path": "../gopurs-node-process"
-      },
       "node-streams": {
         "path": "../gopurs-node-streams"
-      },
-      "now": {
-        "path": "../gopurs-now"
       },
       "nullable": {
         "path": "../gopurs-nullable"
@@ -765,23 +738,8 @@
       "prelude": {
         "path": "../gopurs-prelude"
       },
-      "random": {
-        "path": "../gopurs-random"
-      },
-      "record": {
-        "path": "../gopurs-record"
-      },
       "refs": {
         "path": "../gopurs-refs"
-      },
-      "run": {
-        "path": "../gopurs-run"
-      },
-      "simple-json": {
-        "path": "../gopurs-simple-json"
-      },
-      "spec": {
-        "path": "../gopurs-spec"
       },
       "st": {
         "path": "../gopurs-st"
@@ -789,23 +747,11 @@
       "strings": {
         "path": "../gopurs-strings"
       },
-      "test": {
-        "path": "../gopurs-test"
-      },
       "unfoldable": {
         "path": "../gopurs-unfoldable"
       },
       "unsafe-coerce": {
         "path": "../gopurs-unsafe-coerce"
-      },
-      "uuid": {
-        "path": "../gopurs-uuid"
-      },
-      "variant": {
-        "path": "../gopurs-variant"
-      },
-      "yoga-json": {
-        "path": "../gopurs-yoga-json"
       }
     }
   },
